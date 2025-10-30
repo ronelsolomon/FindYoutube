@@ -131,8 +131,7 @@ class SpanishYouTubeChannelFinder:
                 'twitch': '',
                 'discord': '',
                 'linkedin': '',
-                'website': '',
-                'other_links': []
+                'website': ''
             }
             
             # Extract emails and links from description
@@ -215,8 +214,6 @@ class SpanishYouTubeChannelFinder:
                 full_url = f"https://{url}" if not url.startswith('http') else url
                 if not channel_data['website'] and self.looks_like_website(url):
                     channel_data['website'] = full_url
-                else:
-                    channel_data['other_links'].append(full_url)
     
     def looks_like_website(self, url: str) -> bool:
         """Check if URL looks like a personal/business website"""
@@ -281,8 +278,7 @@ class SpanishYouTubeChannelFinder:
         with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
             fieldnames = ['channel_name', 'channel_url', 'handle', 'subscriber_count', 
                          'emails', 'instagram', 'twitter', 'facebook', 'tiktok', 
-                         'twitch', 'discord', 'linkedin', 'website', 'other_links', 
-                         'description']
+                         'twitch', 'discord', 'linkedin', 'website', 'description']
             
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
@@ -291,7 +287,6 @@ class SpanishYouTubeChannelFinder:
                 # Convert sets and lists to strings
                 channel_copy = channel.copy()
                 channel_copy['emails'] = ', '.join(sorted(channel['emails'])) if channel['emails'] else ''
-                channel_copy['other_links'] = ', '.join(channel['other_links']) if channel['other_links'] else ''
                 channel_copy['description'] = channel['description'][:500]  # Limit description length
                 
                 writer.writerow(channel_copy)
@@ -303,17 +298,84 @@ class SpanishYouTubeChannelFinder:
         """Main execution method"""
         if search_queries is None:
             search_queries = [
-    "español viajes",          # Spanish travel
-    "aprender español",        # Learn Spanish
-    "cultura hispana",         # Hispanic culture
-    "noticias en español",     # News in Spanish
-    "español para principiantes",  # Spanish for beginners
-    "música en español",       # Music in Spanish
-    "deportes en español",     # Sports in Spanish
-    "tecnología en español",   # Technology in Spanish
-    "cocina mexicana",         # Mexican cuisine
-    "español negocios"         # Business Spanish
+    # Language Learning
+    "clases de español",
+    "español conversación",
+    "gramática española",
+    "vocabulario español",
+    "español avanzado",
+    
+    # Entertainment & Culture
+    "series en español",
+    "películas en español",
+    "humor en español",
+    "historias en español",
+    "leyendas hispanas",
+    
+    # Education & Learning
+    "ciencia en español",
+    "historia de España",
+    "historia de Latinoamérica",
+    "matemáticas en español",
+    "educación financiera español",
+    
+    # Lifestyle & Hobbies
+    "ejercicio en español",
+    "yoga en español",
+    "meditación en español",
+    "manualidades en español",
+    "jardinería en español",
+    
+    # Food & Cooking
+    "recetas españolas",
+    "cocina española",
+    "cocina latina",
+    "postres en español",
+    "cocina saludable español",
+    
+    # Technology & Gaming
+    "videojuegos en español",
+    "programación en español",
+    "reseñas tecnología español",
+    "tutoriales photoshop español",
+    "inteligencia artificial español",
+    
+    # News & Current Affairs
+    "análisis noticias español",
+    "política en español",
+    "economía en español",
+    "medio ambiente español",
+    "salud en español",
+    
+    # Regional Focus
+    "cultura mexicana",
+    "cultura argentina",
+    "cultura española",
+    "cultura colombiana",
+    "cultura peruana",
+    
+    # Business & Career
+    "emprendimiento en español",
+    "marketing digital español",
+    "carrera profesional español",
+    "inversiones en español",
+    "trabajo remoto español",
+    
+    # Kids & Family
+    "cuentos en español",
+    "canciones infantiles español",
+    "aprendizaje infantil español",
+    "dibujos animados español",
+    "actividades niños español",
+    
+    # Travel & Exploration
+    "viajar por España",
+    "América Latina viajes",
+    "ciudades españolas",
+    "playas de Latinoamérica",
+    "aventuras en español"
 ]
+            
         
         logger.info("Starting Spanish YouTube channel search")
         
@@ -346,7 +408,7 @@ def main():
     
     # IMPORTANT: Replace with your actual YouTube API key
     # Get one from: https://console.cloud.google.com/apis/credentials
-    YOUTUBE_API_KEY = "AIzaSyBncFed4E-GfOEP7KAzrX84TH5phiTavVk"
+    YOUTUBE_API_KEY = ""
     
     if YOUTUBE_API_KEY == "YOUR_YOUTUBE_API_KEY_HERE":
         print("⚠️  ERROR: Please set your YouTube API key!")
@@ -381,3 +443,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    """search_queries = [
+    "español viajes",          # Spanish travel
+    "aprender español",        # Learn Spanish
+    "cultura hispana",         # Hispanic culture
+    "noticias en español",     # News in Spanish
+    "español para principiantes",  # Spanish for beginners
+    "música en español",       # Music in Spanish
+    "deportes en español",     # Sports in Spanish
+    "tecnología en español",   # Technology in Spanish
+    "cocina mexicana",         # Mexican cuisine
+    "español negocios"         # Business Spanish
+]"""
